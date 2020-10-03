@@ -3,7 +3,7 @@
 from datetime import datetime
 from os.path import join
 
-PATH = ''
+PATH = '/home/alex/foxminded/task_7/Data'
 
 
 def read_file(file_name: str) -> list:
@@ -72,12 +72,14 @@ def get_racer_str(racer: list) -> str:
             f'{racer[5].time().isoformat(timespec=spec):<15}')
 
 
-def print_report(sort: str = 'ASC') -> None:
+def print_report(sort: str = 'ASC') -> list:
     """Print the sorted by time list of racers.
 
     Also add a line after the 15-s racer.
     :param sort: Sort order, defaults to 'ASC'
     :type sort: str, optional
+    :return: A list of strings of the the racers data.
+    :rtype: list.
     """
     racers = get_report()
     racers_str = []
@@ -86,7 +88,7 @@ def print_report(sort: str = 'ASC') -> None:
     racers_str.insert(15, '-' * (len(racers_str[0]) - 3))
     if sort.lower() == 'desc':
         racers_str.reverse()
-    print(*racers_str, sep='\n')
+    return racers_str
 
 
 def print_driver_info(name: str) -> None:
