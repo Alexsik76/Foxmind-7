@@ -4,7 +4,7 @@ from datetime import datetime
 from os.path import join
 from collections import namedtuple
 
-PATH = '/home/alex/foxminded/task_7/Data'
+PATH = '/home/alex/Foxminded/task_6/Data_files'
 Racer = namedtuple('Racer', ('pos', 'abr', 'name', 'team', 'start', 'finish', 'race_time'))
 
 
