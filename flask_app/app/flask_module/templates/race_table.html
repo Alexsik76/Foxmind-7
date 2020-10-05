@@ -3,12 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-<ul>
-    {% for record in records %}
-    <li>{{ record }}</li>
-    {% endfor %}
-</ul>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <span class="navbar-text">
+            Navbar text with an inline element
+    </span>
+</nav>
+<main role="main" class="container">
+    <div class="jumbotron jumbotron-fluid">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                {% for col in colnames.keys() %}
+                    <th class=text-left>{{ col }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for record in records %}
+                <tr>
+                    {% for col in colnames.values() %}
+                        <td>{{ record[col] }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+<nav class="navbar navbar-expand-md navbar-light fixed-bottom bg-light">
+    <span class="navbar-text">
+            Navbar text with an inline element
+    </span>
+</nav>
 </body>
 </html>
