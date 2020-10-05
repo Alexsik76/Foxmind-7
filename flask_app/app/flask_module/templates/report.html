@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<table class="table table-striped sticky-header">
+            <thead class="thead-dark">
+            <tr>
+                {% for col in colnames.keys() %}
+                    <th class=text-left>{{ col }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for record in records %}
+                {% set cl = "" %}
+                {% set rec = record[0] | int %}
+                {% if rec > 15 %}
+                {% set cl = "table-warning" %}
+                {% endif %}
+                <tr class={{ cl }}>
+                    {% for col in colnames.values() %}
+                        <td>{{ record[col] }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+{% endblock %}
