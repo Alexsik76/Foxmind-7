@@ -1,0 +1,9 @@
+/.idea/vcs.xml
+/.idea/.gitignore
+/.idea/jsLibraryMappings.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/task_7.iml
+__pycache__/
+app/__pycache__/
