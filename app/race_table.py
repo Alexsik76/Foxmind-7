@@ -58,23 +58,6 @@ def get_report() -> list:
     return racers
 
 
-def get_racer_str(racer: list) -> str:
-    """Converts data about each racer into a convenient text format.
-
-    :param racer: A list of the racers data.
-    :type racer: list
-    :return: A convenient string of the the racers data.
-    :rtype: str.
-    """
-    spec = 'milliseconds'
-    return (f'{racer[6]:<4}'
-            f'{racer[1]:<20}'
-            f'{racer[2]:<27}'
-            f'{racer[3].time().isoformat(timespec=spec):<15}'
-            f'{racer[4].time().isoformat(timespec=spec):<15}'
-            f'{racer[5].time().isoformat(timespec=spec):<15}')
-
-
 def get_racer_html(racer: list) -> namedtuple:
     """Converts data about each racer into a convenient text format.
 
@@ -104,9 +87,9 @@ def get_html_report(sort: str = 'ASC') -> list:
     :rtype: list.
     """
     racers = get_report()
-    racers_str = []
+    racers_html = []
     for racer in racers:
-        racers_str.append(get_racer_html(racer))
+        racers_html.append(get_racer_html(racer))
     if sort.lower() == 'desc':
-        racers_str.reverse()
-    return racers_str
+        racers_html.reverse()
+    return racers_html

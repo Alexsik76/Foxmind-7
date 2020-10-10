@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
-from flask import render_template, request
+from flask import render_template, request, abort
 from app.race_table import get_html_report
 from app import app
 
-ALL_COLUMNS = {'Position': 'pos',
-               'Abbreviation': 'abr',
-               'Name': 'name',
-               'Team': 'team',
-               'Start time': 'start',
-               'Finish time': 'finish',
-               'Race time': 'race_time'}
+BIG_TABLE = {'Position': 'pos',
+             'Abbreviation': 'abr',
+             'Name': 'name',
+             'Team': 'team',
+             'Start time': 'start',
+             'Finish time': 'finish',
+             'Race time': 'race_time'}
+
+SMALL_TABLE = {'Name': 'name',
+               'Abbreviation': 'abr'}
 
 
 @app.route('/')
@@ -20,25 +23,24 @@ def index():
 
 @app.route('/report/', methods=['GET'])
 def report():
-    sort = request.args.get('order') or ''
-    html_report = get_html_report(sort)
-    return render_template('report.html', records=html_report, colnames=ALL_COLUMNS)
+    order = request.args.get('order') or ''
+    html_report = get_html_report(order)
+    return render_template('report.html', records=html_report, col_names=BIG_TABLE)
 
 
 @app.route('/report/drivers/', methods=['GET'])
 def drivers():
     abr = request.args.get('driver_id') or ''
+    order = request.args.get('order') or ''
     if abr:
-        driver_info = list(filter(lambda driver: abr == driver.abr, get_html_report()))
-        if driver_info:
-            return render_template('driver.html',  driver_info=driver_info[0], col_names=ALL_COLUMNS)
-        else:
-            return render_template('not_found.html')
+        driver_info = list(filter(lambda driver: abr == driver.abr, get_html_report()))\
+                      or abort(404, 'Driver not Found')
+        return render_template('report.html', records=driver_info, col_names=BIG_TABLE)
     else:
-        column_names = {
-            'Name': 'name',
-            'Abbreviation': 'abr'
-        }
-        drivers_html = get_html_report()
-        return render_template('drivers.html', records=drivers_html, col_names=column_names)
+        drivers_html = get_html_report(order)
+        return render_template('drivers.html', records=drivers_html, col_names=SMALL_TABLE)
 
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('not_found.html', error=error), 404
