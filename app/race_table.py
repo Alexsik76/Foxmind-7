@@ -110,35 +110,3 @@ def get_html_report(sort: str = 'ASC') -> list:
     if sort.lower() == 'desc':
         racers_str.reverse()
     return racers_str
-
-
-def print_report(sort: str = 'ASC') -> list:
-    """Print the sorted by time list of racers.
-
-    Also add a line after the 15-s racer.
-    :param sort: Sort order, defaults to 'ASC'
-    :type sort: str, optional
-    :return: A list of strings of the the racers data.
-    :rtype: list.
-    """
-    racers = get_report()
-    racers_str = []
-    for racer in racers:
-        racers_str.append(get_racer_str(racer))
-    racers_str.insert(15, '-' * (len(racers_str[0]) - 3))
-    if sort.lower() == 'desc':
-        racers_str.reverse()
-    return racers_str
-
-
-def print_driver_info(name: str) -> None:
-    """Print information about one racer.
-
-    :param name: Name of the racer.
-    :type name: str
-    """
-    racer = list(filter(lambda driver: name == driver[1], get_report()))[0]
-    if racer:
-        print(get_racer_str(racer))
-    else:
-        print(f'Driver "{name}" not founded.')
