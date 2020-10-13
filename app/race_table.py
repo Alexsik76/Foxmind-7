@@ -53,13 +53,9 @@ def get_report(sort: str = 'ASC') -> list:
     :return: A sorted by time list of racers.
     :rtype: list[NamedTuple[[int, str, str, str, datetime, datetime, datetime]]]
     """
-    files = {'name': 'abbreviations.txt',
-             'start': 'start.log',
-             'finish': 'end.log'}
+    files = ('abbreviations.txt', 'start.log', 'end.log')
     reverse = (sort.lower() == 'desc')
-    source_racers = zip(read_file(files['name']),
-                        read_file(files['start']),
-                        read_file(files['finish']))
+    source_racers = zip(*[read_file(file_name) for file_name in files])
     racers = sorted([parsing_line(line) for line in source_racers],
                     key=lambda lst: lst[5])
     numerated_racers = [Racer(number, *item) for number, item in enumerate(racers, start=1)]
