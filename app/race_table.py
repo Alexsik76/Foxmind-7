@@ -23,59 +23,44 @@ def read_file(file_name: str) -> list:
     return sorted_file
 
 
-def parsing_line(line: tuple) -> list:
+def parsing_line(line: tuple) -> tuple:
     """Divides the line in the appropriate format into data.
 
     :param line: A line combined with three tapes of input files.
     :type line: tuple
     :return: A list of data.
-    :rtype: list[str, str, str, datetime, datetime, datetime]
+    :rtype: tuple[str, str, str, datetime, datetime, datetime]
     """
     f_time = '%Y-%m-%d_%H:%M:%S.%f'
     t_spec = "milliseconds"
-    pos = None
     abr, name, team = line[0].split('_')
     start = datetime.strptime(line[1][3:], f_time)
     finish = datetime.strptime(line[2][3:], f_time)
     race_time = datetime.min + abs(finish - start)
-    return [pos,
-            abr,
+    return (abr,
             name,
             team,
             start.time().isoformat(t_spec),
             finish.time().isoformat(t_spec),
-            race_time.time().isoformat(t_spec)]
+            race_time.time().isoformat(t_spec))
 
 
-def get_report() -> list:
+def get_report(sort: str = 'ASC') -> list:
     """Creates a time-sorted list of drivers with all the necessary data.
 
+    :param sort: Sort order, defaults to 'ASC'
+    :type sort: str, optional
     :return: A sorted by time list of racers.
-    :rtype: list
+    :rtype: list[NamedTuple[[int, str, str, str, datetime, datetime, datetime]]]
     """
     files = {'name': 'abbreviations.txt',
              'start': 'start.log',
              'finish': 'end.log'}
+    reverse = (sort.lower() == 'desc')
     source_racers = zip(read_file(files['name']),
                         read_file(files['start']),
                         read_file(files['finish']))
     racers = sorted([parsing_line(line) for line in source_racers],
-                    key=lambda lst: lst[6])
-    for number, item in enumerate(racers, start=1):
-        item[0] = number
-    return [Racer(*racer) for racer in racers]
-
-
-def get_html_report(sort: str = 'ASC') -> list:
-    """Return the sorted by time list of racers.
-
-    Also add a line after the 15-s racer.
-    :param sort: Sort order, defaults to 'ASC'
-    :type sort: str, optional
-    :return: A list of strings of the the racers data.
-    :rtype: list.
-    """
-    racers_html = get_report()
-    if sort.lower() == 'desc':
-        racers_html.reverse()
-    return racers_html
+                    key=lambda lst: lst[5])
+    numerated_racers = [Racer(number, *item) for number, item in enumerate(racers, start=1)]
+    return reversed(numerated_racers) if reverse else numerated_racers

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, request, abort
-from app.race_table import get_html_report
+from app.race_table import get_report
 from app import app
 
 BIG_TABLE = {'Position': 'pos',
@@ -24,7 +24,7 @@ def index():
 @app.route('/report/', methods=['GET'])
 def report():
     order = request.args.get('order') or ''
-    html_report = get_html_report(order)
+    html_report = get_report(order)
     return render_template('report.html', records=html_report, col_names=BIG_TABLE)
 
 
@@ -33,11 +33,11 @@ def drivers():
     abr = request.args.get('driver_id') or ''
     order = request.args.get('order') or ''
     if abr:
-        driver_info = list(filter(lambda driver: abr == driver.abr, get_html_report()))\
+        driver_info = list(filter(lambda driver: abr == driver.abr, get_report()))\
                       or abort(404, 'Driver not Found')
         return render_template('report.html', records=driver_info, col_names=BIG_TABLE)
     else:
-        drivers_html = get_html_report(order)
+        drivers_html = get_report(order)
         return render_template('drivers.html', records=drivers_html, col_names=SMALL_TABLE)
 
 
