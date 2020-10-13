@@ -10,7 +10,7 @@
         </thead>
         <tbody>
         {% for record in records %}
-            <tr {{ 'class=table-secondary' if (record['pos'] | int) > 15 else '' }}>
+            <tr {{ 'class=table-secondary' if record['pos'] > 15 else '' }}>
                 {% for col in col_names.values() %}
                     <td>{{ record[col] }}</td>
                 {% endfor %}
