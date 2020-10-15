@@ -53,6 +53,7 @@ def get_report(sort: str = 'ASC') -> list:
     :return: A sorted by time list of racers.
     :rtype: list[NamedTuple[[int, str, str, str, datetime, datetime, datetime]]]
     """
+    # TODO replace reverse to views
     files = ('abbreviations.txt', 'start.log', 'end.log')
     reverse = (sort.lower() == 'desc')
     source_racers = zip(*[read_file(file_name) for file_name in files])
