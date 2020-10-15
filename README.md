@@ -19,8 +19,17 @@ For the checking Shell Variables use:
 printenv FLASK_APP
 printenv DATA_PATH
 ```
-
-
+In the Windows 10 (I use a Powershell 7)
+for the the checking Shell Variables use:
+```bash
+ $Env:data_path
+```
+For the set variable use:
+```bash
+$Env:data_path = 'C:\Users\Alex\foxmind\task_7\Data'
+```
+[Microsoft](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables?view=powershell-7)
+.
 
 After that you can run flask app:
 ```bash
