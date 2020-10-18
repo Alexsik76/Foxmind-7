@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from flask import render_template, request, abort
-from app.race_table import get_report
-from app import app
+from flask import (Blueprint, abort, render_template, request)
+from . import race_table
 
+bp = Blueprint('/report', __name__)
 BIG_TABLE = {'Position': 'pos',
              'Abbreviation': 'abr',
              'Name': 'name',
@@ -15,32 +15,31 @@ SMALL_TABLE = {'Name': 'name',
                'Abbreviation': 'abr'}
 
 
-@app.route('/')
-@app.route('/index')
+@bp.route('/')
 def index():
     return render_template('index.html')
 
 
-@app.route('/report/', methods=['GET'])
+@bp.route('/report/', methods=['GET'])
 def report():
     order = request.args.get('order') or ''
-    html_report = get_report(order)
+    html_report = race_table.get_report(order)
     return render_template('report.html', records=html_report, col_names=BIG_TABLE)
 
 
-@app.route('/report/drivers/', methods=['GET'])
+@bp.route('/report/drivers/', methods=['GET'])
 def drivers():
     abr = request.args.get('driver_id') or ''
     order = request.args.get('order') or ''
     if abr:
-        driver_info = list(filter(lambda driver: abr == driver.abr, get_report()))\
-                      or abort(404, 'Driver not Found')
+        driver_info = list(filter(lambda driver: abr == driver.abr, race_table.get_report())) \
+                      or abort(404, 'Driver not found')
         return render_template('report.html', records=driver_info, col_names=BIG_TABLE)
     else:
-        drivers_html = get_report(order)
+        drivers_html = race_table.get_report(order)
         return render_template('drivers.html', records=drivers_html, col_names=SMALL_TABLE)
 
 
-@app.errorhandler(404)
+@bp.app_errorhandler(404)
 def page_not_found(error):
     return render_template('not_found.html', error=error)

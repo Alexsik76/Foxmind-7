@@ -1,11 +1,11 @@
 # This option does not use classes and uses a minimum of functions.
 # Therefore, many Comprehensions are used.
 from datetime import datetime
-from os.path import join
+import os
 from collections import namedtuple
 
 
-PATH = ''
+PATH = os.environ.get('DATA_PATH')
 Racer = namedtuple('Racer', ('pos', 'abr', 'name', 'team', 'start', 'finish', 'race_time'))
 
 
@@ -17,7 +17,7 @@ def read_file(file_name: str) -> list:
     :return: Sorted list of strings.
     :rtype: list
     """
-    path_to_file = join(PATH, file_name)
+    path_to_file = os.path.join(PATH, file_name)
     with open(path_to_file, encoding='utf8') as file:
         sorted_file = sorted([line.strip() for line in file if line.strip()])
     return sorted_file

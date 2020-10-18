@@ -35,3 +35,23 @@ After that you can run flask app:
 ```bash
 flask run
 ```
+
+For Linux and Mac:
+
+```bash
+$ export FLASK_APP=race_table
+$ export FLASK_ENV=development
+$ flask run
+```
+For Windows cmd, use set instead of export:
+```bash
+> set FLASK_APP=race_table
+> set FLASK_ENV=development
+> flask run
+```
+For Windows PowerShell, use $env: instead of export:
+```bash
+> $env:FLASK_APP = "race_table"
+> $env:FLASK_ENV = "development"
+> flask run
+```

@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h2 class="alert-heading">{{ error }}</h2>
+    <h2 class="alert-heading, bg-warning">{{ error }}</h2>
     <h3>For example use:</h3>
-    <ul>
+    <ul class="list-group-item-warning">
         <li>http://localhost:5000/report shows common statistic</li>
         <li>http://localhost:5000/report/drivers/  shows list of drivers name and code. Code should be a link on info about drivers</li>
         <li>http://localhost:5000/report/drivers/?driver_id=SVF shows info about a driver</li>
     </ul>
     <p>Also, each route could get order parameter:</p>
-    <ul>
+    <ul class="list-group-item-warning">
         <li>http://localhost:5000/report/drivers/?order=desc</li>
     </ul>
 {% endblock %}
