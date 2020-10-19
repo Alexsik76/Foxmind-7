@@ -2,7 +2,7 @@
 from flask import (Blueprint, abort, render_template, request)
 from . import race_table
 
-bp = Blueprint('/report', __name__)
+bp = Blueprint('report', __name__)
 BIG_TABLE = {'Position': 'pos',
              'Abbreviation': 'abr',
              'Name': 'name',
@@ -13,11 +13,6 @@ BIG_TABLE = {'Position': 'pos',
 
 SMALL_TABLE = {'Name': 'name',
                'Abbreviation': 'abr'}
-
-
-@bp.route('/')
-def index():
-    return render_template('index.html')
 
 
 @bp.route('/report/', methods=['GET'])
