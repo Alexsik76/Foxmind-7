@@ -17,7 +17,7 @@ pipenv install
 pipenv shell
 ```  
 
-##Usage
+## Usage
 
 ```bash
 flask run
