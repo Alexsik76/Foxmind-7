@@ -10,9 +10,9 @@ Racer = namedtuple('Racer', ('pos', 'abr', 'name', 'team', 'start', 'finish', 'r
 
 
 def read_file(file_name: str) -> list:
-    """Reading the any file and return sorted by text list of strings.
+    """Reading any file and return sorted by text list of strings.
 
-    :param file_name: A files name.
+    :param file_name: A files` name.
     :type file_name: str
     :return: Sorted list of strings.
     :rtype: list
@@ -53,7 +53,6 @@ def get_report(sort: str = 'ASC') -> list:
     :return: A sorted by time list of racers.
     :rtype: list[NamedTuple[[int, str, str, str, datetime, datetime, datetime]]]
     """
-    # TODO replace reverse to views
     files = ('abbreviations.txt', 'start.log', 'end.log')
     reverse = (sort.lower() == 'desc')
     source_racers = zip(*[read_file(file_name) for file_name in files])
